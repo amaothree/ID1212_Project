@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://host:port/database
+    username:
+    password:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+  security:
+    user:
+      name:
+      password:
