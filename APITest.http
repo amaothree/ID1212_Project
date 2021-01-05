@@ -1,0 +1,13 @@
+POST http://localhost:10086/login
+Content-Type: application/x-www-form-urlencoded
+
+username=amao&password=123
+
+###
+POST http://localhost:10086/register
+Content-Type: application/x-www-form-urlencoded
+
+username=amao&password=123&email=123@qwe.com&phone_number=110
+
+###
+
