@@ -1,6 +1,6 @@
 package id1212.project.controller;
 
-import id1212.project.bean.User;
+import id1212.project.entity.User;
 import id1212.project.repository.UserRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -1,3 +1,16 @@
+GET http://localhost:10086/room/get?id=1
+Accept: application/json
+
+###
+
+
+###
+POST http://localhost:10086/room/add
+Content-Type: application/x-www-form-urlencoded
+
+type=test2&topic=test2&password=2
+
+###
 POST http://localhost:10086/login
 Content-Type: application/x-www-form-urlencoded
 

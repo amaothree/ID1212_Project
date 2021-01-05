@@ -1,4 +1,4 @@
-package id1212.project.bean;
+package id1212.project.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +14,9 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
     private String username;
     private String password;
