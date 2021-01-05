@@ -3,10 +3,10 @@
 Yuehao Sui  
 Zidi Chen
 
-##API
+## API
 http://localhost:10086
 
-###User
+### User
 
 #### /login
 POST  
@@ -26,8 +26,8 @@ String phone_number
 
 返回新用户信息(JSON)
 
-###Room (/room)
-####/add
+### Room (/room)
+#### /add
 POST  
 String topic,
 String password,
@@ -35,18 +35,18 @@ String type
 
 返回新房间信息
 
-####/get
+#### /get
 GET
 long id
 
 返回指定id的房间信息
 
-####/get_all
+#### /get_all
 GET
 
 返回所有房间信息
 
-####/delete
+#### /delete
 DELETE
 long id
 
@@ -55,9 +55,10 @@ long id
 删除成功返回 "Success"
 
 ### Chat (websocket)
+前端可以看这个文章后半部分
 https://blog.csdn.net/qq_41603102/article/details/88351729
 
-####room内聊天 (/msg/chat)
+#### room内聊天 (/msg/chat)
 前端需要发一个request给/msg/chat  
 包含destination, sender, type, content
 
@@ -67,7 +68,7 @@ destination应该是每个房间的ID
 
 然后一直访问/topic/<roomid>的浏览器就可以收到来自这个socket的信息了
 
-####群发 (/msg/chatAll)
+#### 群发 (/msg/chatAll)
 
 前端需要发一个request给/msg/chatAll  
 包含sender, type, content
