@@ -3,6 +3,7 @@ package id1212.project.controller;
 import id1212.project.entity.RequestMessage;
 import id1212.project.entity.ResponseMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class ChatController {
     @CrossOrigin
     @MessageMapping("/chat")
     public void messageHandling(RequestMessage requestMessage) throws Exception {
-        String destination = "/topic/" + HtmlUtils.htmlEscape(requestMessage.getRoom());
+        String destination = "/room/" + HtmlUtils.htmlEscape(requestMessage.getRoom());
 
         String sender = HtmlUtils.htmlEscape(requestMessage.getSender());
         String type = HtmlUtils.htmlEscape(requestMessage.getType());
@@ -40,5 +41,12 @@ public class ChatController {
         ResponseMessage response = new ResponseMessage(sender, type, content);
 
         messagingTemplate.convertAndSend(destination, response);
+    }
+
+    @CrossOrigin
+    @MessageMapping("/test")
+    @SendTo("/all")
+    public String messageHandlingTEST(String msg) throws Exception {
+        return msg;
     }
 }
