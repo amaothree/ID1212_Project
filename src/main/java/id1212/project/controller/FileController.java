@@ -2,12 +2,17 @@ package id1212.project.controller;
 
 import id1212.project.entity.UserFile;
 import id1212.project.repository.UserFileRepository;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONObject;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 
 @RestController
@@ -34,7 +39,7 @@ public class FileController {
 
     @CrossOrigin
     @PostMapping("/upload")
-    public String fileUpload(@RequestParam("files") MultipartFile[] files, Long room_id, Long user_id) throws JSONException {
+    public String fileUpload(@RequestParam("files") MultipartFile[] files, Long room_id, Long user_id) {
         JSONObject object = new JSONObject();
         try {
             for (MultipartFile uploadedFile : files) {
@@ -68,4 +73,51 @@ public class FileController {
         object.put("message","Upload Successful");
         return object.toString();
     }
+
+    @CrossOrigin
+    @GetMapping("/download")
+    public ResponseEntity download(Long file_id){
+        UserFile userFile;
+        try{
+            if(!userFileRepository.existsById(file_id)){
+                throw new FileNotFoundException();
+            }else {
+                userFile = userFileRepository.getOne(file_id);
+            }
+            File file = new File(HOMEDIR, String.valueOf(file_id));
+            Resource resource = new UrlResource(file.toURI());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + userFile.getName() + "\"")
+                    .body(resource);
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/delete")
+    public String deleteFile(Long file_id) {
+        JSONObject object = new JSONObject();
+        UserFile userFile;
+        try {
+            if (!userFileRepository.existsById(file_id)) {
+                object.put("status", 2);
+                object.put("message", "Error. File not exist in the server");
+            } else {
+                userFile = userFileRepository.getOne(file_id);
+                userFileRepository.delete(userFile);
+                new File(HOMEDIR, userFile.getId().toString()).delete();
+                object.put("status", 1);
+                object.put("message", "File:"+userFile.getName()+" delete successful!");
+            }
+            return object.toString();
+        } catch (Exception e){
+            object.put("status", 3);
+            object.put("message", e.toString());
+            return object.toString();
+        }
+    }
+
 }

@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'id1212'
-version = '0.0.2'
+version = '0.0.3'
 sourceCompatibility = '11'
 
 configurations {
@@ -36,6 +36,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.json:json:20201115'
 }
 
 test {
