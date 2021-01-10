@@ -85,3 +85,61 @@ STOMP的API有两类：
 
 https://apic.app/online
 
+### File
+
+#### /file/upload
+
+文件上传
+
+POST请求
+
+三个参数： 
+MultipartFile[] files, Long room_id, Long user_id
+
+返回值为含有两个key（status和message）的JSON
+1. status = 1
+> message: Upload Successful
+
+2. status = 2
+> message: Upload Error, Please try to resubmit
+
+3. status = 3
+> message: Room had same file, you are not owner so can not update it.
+
+#### /file/download
+
+文件下载
+
+GET
+
+一个参数：Long file_id
+
+成功的话就返回下载的URL，现在浏览器一般会直接开始下载任务。
+
+错误的话就会返回404页面，一般来说是文件找不到。
+
+#### /file/delete
+
+文件删除
+
+DELETE 请求
+
+一个参数：Long file_id
+
+返回值为含有两个key（status和message）的JSON
+1. status = 1
+> message: File:"userFile" delete successful!
+
+2. status = 2
+> message: Error. File not exist in the server
+
+3. status = 3
+> message: "Exception details"
+
+#### /file/room_files
+
+GET 请求
+
+一个参数：Long room_id
+
+返回值为对应room的已上传文件的信息列表（JSON）

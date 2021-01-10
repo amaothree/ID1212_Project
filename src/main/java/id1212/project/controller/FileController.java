@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/file")
@@ -118,6 +119,12 @@ public class FileController {
             object.put("message", e.toString());
             return object.toString();
         }
+    }
+
+    @CrossOrigin
+    @GetMapping("/room_files")
+    public List<UserFile> roomFiles(Long room_id){
+        return userFileRepository.findUserFilesByRoom(room_id);
     }
 
 }
